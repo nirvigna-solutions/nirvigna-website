@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import Card from '../../components/Card.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { INDUSTRIES } from '../../config/industries';
+import { PRODUCTS } from '../../config/site';
+---
+
+<BaseLayout
+  title="Industries"
+  description={`${PRODUCTS.compliance.name} is being built first for restaurants and food businesses, manufacturing units, and shops and establishments in Telangana.`}
+>
+  <PageHero
+    status="earlyAccess"
+    title="Industries"
+    lead="We are starting with three kinds of business in Telangana, where licence requirements are many and the reasons behind them are often unclear."
+  />
+
+  <Section>
+    <div class="grid gap-6 md:grid-cols-3">
+      {
+        INDUSTRIES.map((i) => (
+          <Card title={i.title} headingLevel="h2" href={`/industries/${i.slug}/`} linkLabel={`${i.title}: areas we look at`}>
+            {i.summary}
+          </Card>
+        ))
+      }
+    </div>
+  </Section>
+
+  <CtaBand body="Your business does not fit neatly into one of these? Tell us about it anyway." />
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+import StatusBadge from './StatusBadge.astro';
+import type { ProductStatus } from '../config/site';
+
+interface Props {
+  title: string;
+  lead?: string;
+  status?: ProductStatus;
+  eyebrow?: string;
+}
+const { title, lead, status, eyebrow } = Astro.props;
+---
+
+<section class="border-b border-brand-100 bg-gradient-to-b from-brand-50 to-white">
+  <div class="container-page py-12 sm:py-16">
+    {status && <div class="mb-4"><StatusBadge status={status} /></div>}
+    {eyebrow && <p class="mb-2 font-semibold text-brand-700">{eyebrow}</p>}
+    <h1 class="max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">{title}</h1>
+    {lead && <p class="mt-4 max-w-2xl text-lg leading-relaxed text-slate-700">{lead}</p>}
+    <slot />
+  </div>
+</section>

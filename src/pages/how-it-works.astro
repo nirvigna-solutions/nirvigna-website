@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { PRODUCTS } from '../config/site';
+
+const name = PRODUCTS.compliance.name;
+const examples = [
+  {
+    state: 'Applies',
+    tone: 'border-brand-300 bg-brand-50',
+    item: '[Example licence]',
+    why: 'Because your profile says [example fact about your business].',
+    source: '[Act name], section [x]',
+  },
+  {
+    state: 'Does not apply',
+    tone: 'border-slate-300 bg-white',
+    item: '[Example registration]',
+    why: 'Because your profile confirms [example fact], which is outside its scope.',
+    source: '[Act name], section [y]',
+  },
+  {
+    state: 'We can’t tell yet',
+    tone: 'border-amber-400 bg-amber-50',
+    item: '[Example licence]',
+    why: 'We need to know [missing fact] before we can say whether this applies.',
+    source: '[Act name], section [z]',
+  },
+];
+---
+
+<BaseLayout
+  title="How it works"
+  description={`How ${name} works: from a business profile to applicable licences with reasons, a compliance register, document packs and renewals.`}
+>
+  <PageHero
+    status="earlyAccess"
+    title="How it works"
+    lead={`${name} is built around one idea: every result should come with a reason you can check.`}
+  />
+
+  <Section title="From profile to register">
+    <ol class="max-w-3xl space-y-6">
+      <li>
+        <h3 class="text-lg font-semibold">1. Build your business profile</h3>
+        <p class="mt-1 leading-relaxed text-slate-700">Answer plain questions about what you do, where, your premises, your scale and your people.</p>
+      </li>
+      <li>
+        <h3 class="text-lg font-semibold">2. See what applies, with reasons</h3>
+        <p class="mt-1 leading-relaxed text-slate-700">
+          Each licence or registration is shown with one of three answers, the reason for it, and the Act and section behind it.
+        </p>
+      </li>
+      <li>
+        <h3 class="text-lg font-semibold">3. Fill the gaps in your facts</h3>
+        <p class="mt-1 leading-relaxed text-slate-700">“We can’t tell yet” items tell you exactly which fact is missing. Add it and the answer updates.</p>
+      </li>
+      <li>
+        <h3 class="text-lg font-semibold">4. Keep a compliance register</h3>
+        <p class="mt-1 leading-relaxed text-slate-700">What applies moves into a register showing what you hold, what is pending and what is missing.</p>
+      </li>
+      <li>
+        <h3 class="text-lg font-semibold">5. Use document packs and track renewals</h3>
+        <p class="mt-1 leading-relaxed text-slate-700">
+          Document packs list what to gather for each item. Renewal dates are tracked. Regulated filings are done by a qualified CA/CS.
+        </p>
+      </li>
+    </ol>
+  </Section>
+
+  <Section
+    title="The three answers"
+    intro="An illustrative layout only. The bracketed text is a stand-in, not real guidance about any licence."
+    tone="muted"
+  >
+    <ul class="grid gap-6 lg:grid-cols-3">
+      {
+        examples.map((ex) => (
+          <li class:list={['rounded-xl border-2 p-6', ex.tone]}>
+            <p class="text-sm font-bold tracking-wide text-slate-900 uppercase">{ex.state}</p>
+            <p class="mt-2 text-lg font-semibold text-slate-900">{ex.item}</p>
+            <p class="mt-2 leading-relaxed text-slate-700">{ex.why}</p>
+            <p class="mt-3 text-sm text-slate-700">
+              <span class="font-semibold">Source:</span> {ex.source}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mt-6 max-w-3xl leading-relaxed text-slate-700">
+      “We can’t tell yet” is deliberate. Marking something as not applicable when we do not have the facts would leave you exposed
+      without knowing it.
+    </p>
+  </Section>
+
+  <Section title="Where it stands today">
+    <p class="max-w-3xl leading-relaxed text-slate-700">
+      {name} is in early access, starting with Telangana and with food businesses, manufacturing, and shops and establishments.
+      Read about the <a href="/starting-a-business/" class="link">starting a business</a> and
+      <a href="/already-running/" class="link">already running</a> tracks.
+    </p>
+  </Section>
+
+  <CtaBand />
+</BaseLayout>

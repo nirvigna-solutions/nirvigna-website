@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import ContactLinks from '../../components/ContactLinks.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { ADDRESS_ONE_LINE, COMPANY, PRODUCTS } from '../../config/site';
+
+const hasForm = __CONTACT_ENDPOINT__ !== null;
+---
+
+<BaseLayout
+  title="Contact and book a demo"
+  description={`Contact ${COMPANY.brand} or book a demo of ${PRODUCTS.compliance.name}. Email ${COMPANY.email}, call or WhatsApp ${COMPANY.phoneDisplay}.`}
+>
+  <PageHero
+    title="Contact us or book a demo"
+    lead={`Tell us about your business. We will show you what ${PRODUCTS.compliance.name} can do for it today, what is still being built, and answer your questions. You can also register interest in ${PRODUCTS.foodSafety.name}.`}
+  />
+
+  <Section>
+    <div class:list={['grid gap-10', hasForm && 'lg:grid-cols-[3fr_2fr]']}>
+      {
+        hasForm && (
+          <div>
+            <ContactForm />
+          </div>
+        )
+      }
+      <div class:list={['space-y-6', !hasForm && 'max-w-4xl']}>
+        <h2 class="text-xl font-semibold">Reach us directly</h2>
+        <ContactLinks stacked={hasForm} />
+        <div class="rounded-xl border border-slate-200 p-5 text-sm leading-relaxed text-slate-700">
+          <p class="font-semibold text-slate-900">Registered office</p>
+          <p>{COMPANY.legalName}</p>
+          <p>{ADDRESS_ONE_LINE}</p>
+        </div>
+        <p class="text-sm leading-relaxed text-slate-600">
+          How we use what you send us is explained in our <a href="/privacy/" class="link">privacy notice</a>. For complaints about
+          personal data, see our <a href="/grievance/" class="link">grievance contact</a>.
+        </p>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

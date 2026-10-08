@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { PRODUCTS } from '../config/site';
+
+const name = PRODUCTS.compliance.name;
+---
+
+<BaseLayout
+  title={name}
+  description={`${name} (early access) shows which licences apply to your business, why, and under which Act and section, then keeps them in a register with document packs and renewals.`}
+>
+  <PageHero
+    status={PRODUCTS.compliance.status}
+    title={name}
+    lead="Know which licences apply to your business, why they apply, and under which Act and section. Then keep them in order with a compliance register, document packs and renewals."
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/contact/" class="btn-primary">Book a demo</a>
+      <a href="/how-it-works/" class="btn-secondary">How it works</a>
+    </div>
+  </PageHero>
+
+  <Section title="How it works">
+    <ol class="space-y-6">
+      <li class="rounded-xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">1. Your business profile</h3>
+        <p class="mt-2 leading-relaxed text-slate-700">
+          You answer questions about your business: what you do, where you operate, your premises, your scale and the number of
+          people you employ. You can come back and add detail at any time.
+        </p>
+      </li>
+      <li class="rounded-xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">2. Which licences apply, and why</h3>
+        <p class="mt-2 leading-relaxed text-slate-700">
+          From the profile, {name} lists the licences and registrations that apply. Each item shows the reason it applies and the
+          Act and section it comes from. Where facts are missing, it says <strong>“we can’t tell yet”</strong> and tells you what
+          it needs — it does not mark the item as “doesn’t apply”.
+        </p>
+      </li>
+      <li class="rounded-xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">3. A compliance register</h3>
+        <p class="mt-2 leading-relaxed text-slate-700">
+          Everything that applies goes into one register: what you hold, what is pending, and what is missing.
+        </p>
+      </li>
+      <li class="rounded-xl border border-slate-200 p-6">
+        <h3 class="text-lg font-semibold">4. Document packs and renewals</h3>
+        <p class="mt-2 leading-relaxed text-slate-700">
+          For each item, a document pack lists what you need to gather. Renewal dates are tracked so you hear about them before
+          they fall due. Regulated filings are done by a qualified CA/CS.
+        </p>
+      </li>
+    </ol>
+  </Section>
+
+  <Section title="Two tracks" tone="muted">
+    <div class="grid gap-6 md:grid-cols-2">
+      <Card title="Starting a business" href="/starting-a-business/" linkLabel="Starting a business">
+        Work out what your new business needs before you open.
+      </Card>
+      <Card title="Already running" href="/already-running/" linkLabel="Already running">
+        Baseline, find gaps, regularise and stay current.
+      </Card>
+    </div>
+    <p class="mt-6 leading-relaxed text-slate-700">
+      Preparing for an inspection? See <a href="/audit-readiness/" class="link">audit readiness</a>.
+    </p>
+  </Section>
+
+  <Section title="Who it is for">
+    <div class="grid gap-6 md:grid-cols-3">
+      <Card title="Restaurants & food" href="/industries/restaurants-and-food/" linkLabel="Restaurants & food">
+        Food service and food processing businesses.
+      </Card>
+      <Card title="Manufacturing" href="/industries/manufacturing/" linkLabel="Manufacturing">Manufacturing units and workshops.</Card>
+      <Card title="Shops & establishments" href="/industries/shops-and-establishments/" linkLabel="Shops & establishments">
+        Shops, offices and other commercial establishments.
+      </Card>
+    </div>
+  </Section>
+
+  <Section title="What early access means" tone="muted">
+    <ul class="max-w-3xl list-disc space-y-2 pl-6 leading-relaxed text-slate-700">
+      <li>{name} is being built with a small number of early businesses.</li>
+      <li>Coverage starts with Telangana. Other states will follow.</li>
+      <li>The rules behind each result are still being written and reviewed, so we will tell you plainly what is covered when we talk.</li>
+      <li>Nothing on this website is legal advice. Regulated filings are done by a qualified CA/CS.</li>
+    </ul>
+  </Section>
+
+  <CtaBand />
+</BaseLayout>

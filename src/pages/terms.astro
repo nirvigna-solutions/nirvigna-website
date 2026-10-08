@@ -1,0 +1,73 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { COMPANY, CONTACT_LINKS, PRODUCTS } from '../config/site';
+---
+
+<LegalLayout
+  title="Terms of Use"
+  description="The terms that apply when you use the Nirvigna website."
+  lastUpdated="8 October 2026"
+>
+  <p>
+    These terms apply to your use of this website, operated by {COMPANY.legalName} (“{COMPANY.brand}”, “we”, “us”). By using the
+    website you agree to them. If you do not agree, please do not use the website.
+  </p>
+
+  <h2>1. What this website is</h2>
+  <p>
+    This website describes our company and our products. {PRODUCTS.compliance.name} is in early access and
+    {PRODUCTS.foodSafety.name} is in development. Descriptions of how they work may change as they are built.
+  </p>
+
+  <h2>2. Not legal advice</h2>
+  <p>
+    Content on this website is general information only. It is not legal, tax or professional advice, and using the website does
+    not create a professional relationship between you and us. Regulated filings are done by a qualified CA/CS. See our
+    <a href="/disclaimer/">Disclaimer</a>.
+  </p>
+
+  <h2>3. Accuracy</h2>
+  <p>
+    We try to keep the website accurate and up to date, but laws and rules change, and we do not promise that every part of the
+    website is complete, current or free of errors.
+  </p>
+
+  <h2>4. Acceptable use</h2>
+  <ul>
+    <li>Do not use the website for anything unlawful.</li>
+    <li>Do not try to disrupt the website, get around its security or send automated or bulk submissions through the contact form.</li>
+    <li>Do not send us personal data about other people without their permission.</li>
+  </ul>
+
+  <h2>5. Intellectual property</h2>
+  <p>
+    The website’s content, design and the {COMPANY.brand} name belong to us or are used with permission. You may view and share
+    pages for your own non-commercial use, but not copy or republish them without our written permission.
+  </p>
+
+  <h2>6. Links to other services</h2>
+  <p>
+    Some links open services run by others, such as WhatsApp (run by Meta). Their own terms and privacy policies apply, and we
+    are not responsible for them.
+  </p>
+
+  <h2>7. Limitation of liability</h2>
+  <p>
+    To the extent the law allows, we are not liable for any loss arising from your use of, or reliance on, this website. Nothing
+    in these terms limits liability that cannot be limited by law.
+  </p>
+
+  <h2>8. Personal data</h2>
+  <p>How we handle personal data is set out in our <a href="/privacy/">Privacy Policy</a>.</p>
+
+  <h2>9. Governing law</h2>
+  <p>
+    These terms are governed by the laws of India. <Placeholder text="[PLACEHOLDER: jurisdiction clause to be settled in legal review]" />
+  </p>
+
+  <h2>10. Changes and contact</h2>
+  <p>
+    We may update these terms by posting a new version on this page. Questions: <a href={CONTACT_LINKS.email}>{COMPANY.email}</a>.
+  </p>
+</LegalLayout>

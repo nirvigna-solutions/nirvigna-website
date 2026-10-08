@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import ContactLinks from '../components/ContactLinks.astro';
+import { PRODUCTS } from '../config/site';
+---
+
+<BaseLayout title="Pricing" description={`Pricing for ${PRODUCTS.compliance.name} and audit readiness: talk to us. We are in early access and agree terms with each business directly.`}>
+  <PageHero title="Pricing: talk to us" lead="We are in early access, so we are not publishing prices yet. Tell us about your business and we will explain what is available and what it would cost." />
+
+  <Section title="What to tell us">
+    <ul class="max-w-3xl list-disc space-y-2 pl-6 leading-relaxed text-slate-700">
+      <li>Your type of business and where it operates.</li>
+      <li>Whether you are starting out or already running.</li>
+      <li>Whether you are preparing for an inspection.</li>
+    </ul>
+    <p class="mt-6"><a href="/contact/" class="btn-primary">Talk to us</a></p>
+  </Section>
+
+  <Section title="Other ways to reach us" tone="muted">
+    <ContactLinks />
+  </Section>
+</BaseLayout>

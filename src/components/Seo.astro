@@ -1,0 +1,46 @@
+---
+import { COMPANY, SITE_URL } from '../config/site';
+import { LOCALE_META, type Locale } from '../i18n/config';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  noindex?: boolean;
+}
+const { title, description, locale, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE_URL).href;
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: COMPANY.brand,
+  legalName: COMPANY.legalName,
+  url: SITE_URL,
+  email: COMPANY.email,
+  telephone: COMPANY.phoneE164,
+  foundingDate: COMPANY.incorporated,
+  identifier: { '@type': 'PropertyValue', propertyID: 'CIN', value: COMPANY.cin },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: COMPANY.address.street,
+    addressLocality: COMPANY.address.city,
+    addressRegion: COMPANY.address.region,
+    postalCode: COMPANY.address.postalCode,
+    addressCountry: COMPANY.address.country,
+  },
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex" />}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={COMPANY.brand} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={LOCALE_META[locale].ogLocale} />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json" set:html={JSON.stringify(organization)} />

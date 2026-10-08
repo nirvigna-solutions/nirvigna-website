@@ -1,0 +1,9 @@
+---
+/** Visibly marked placeholder text. Every use is listed in docs/CONTENT_DECISIONS.md. */
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<mark class="rounded bg-amber-100 px-1 font-medium text-amber-950" data-placeholder="text">{text}</mark>

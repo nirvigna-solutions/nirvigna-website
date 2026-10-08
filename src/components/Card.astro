@@ -1,0 +1,26 @@
+---
+interface Props {
+  title: string;
+  href?: string;
+  linkLabel?: string;
+  headingLevel?: 'h2' | 'h3';
+}
+const { title, href, linkLabel, headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
+---
+
+<div class="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+  <Heading class="text-lg font-semibold text-slate-900">{title}</Heading>
+  <div class="mt-2 flex-1 leading-relaxed text-slate-700">
+    <slot />
+  </div>
+  {
+    href && linkLabel && (
+      <p class="mt-4">
+        <a href={href} class="link">
+          {linkLabel}
+        </a>
+      </p>
+    )
+  }
+</div>

@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t, DEFAULT_LOCALE } from '../../i18n/config';
+
+const ui = t(DEFAULT_LOCALE);
+---
+
+<BaseLayout title="Thank you" description="Thank you for contacting Nirvigna. We will reply using the email or phone number you gave us." noindex>
+  <section class="container-page max-w-3xl py-16 sm:py-24">
+    <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{ui.form.successTitle}</h1>
+    <p class="mt-4 text-lg leading-relaxed text-slate-700">{ui.form.successBody}</p>
+    <p class="mt-8 flex flex-wrap gap-3">
+      <a href="/" class="btn-primary">Back to the home page</a>
+      <a href="/how-it-works/" class="btn-secondary">How it works</a>
+    </p>
+  </section>
+</BaseLayout>

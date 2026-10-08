@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { PRODUCTS } from '../config/site';
+---
+
+<BaseLayout
+  title="Audit readiness"
+  description="Audit readiness from Nirvigna (early access): a structured review of your licences and documents before an inspection, so you know where you stand."
+>
+  <PageHero
+    status="earlyAccess"
+    eyebrow="Service"
+    title="Audit readiness"
+    lead="A structured review of your licences, registers and documents before an inspection, so you know where you stand and what to fix first."
+  />
+
+  <Section title="What the service is designed to cover">
+    <ul class="max-w-3xl list-disc space-y-3 pl-6 leading-relaxed text-slate-700">
+      <li>Building or updating your compliance register in {PRODUCTS.compliance.name}.</li>
+      <li>Checking that the licences and registrations you hold match what applies to your business, with reasons and the Act and section for each.</li>
+      <li>Listing gaps and missing documents, in order of priority.</li>
+      <li>Organising document packs so papers are easy to find on the day.</li>
+    </ul>
+  </Section>
+
+  <Section title="What it is not" tone="muted">
+    <ul class="max-w-3xl list-disc space-y-3 pl-6 leading-relaxed text-slate-700">
+      <li>It is not an inspection or an official audit, and it does not replace one.</li>
+      <li>It does not predict or promise any inspection outcome.</li>
+      <li>It is not legal advice. Regulated filings are done by a qualified CA/CS.</li>
+    </ul>
+    <p class="mt-6 max-w-3xl leading-relaxed text-slate-700">
+      Audit readiness is in early access and starts with businesses in Telangana.
+    </p>
+  </Section>
+
+  <CtaBand title="Preparing for an inspection?" body="Tell us about your business and when you expect the inspection." />
+</BaseLayout>

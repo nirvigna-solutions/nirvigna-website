@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import DraftBanner from '../components/DraftBanner.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  lastUpdated: string;
+}
+const { title, description, lastUpdated } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="container-page max-w-3xl py-12 sm:py-16">
+    <DraftBanner />
+    <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>
+    <p class="mt-2 text-sm text-slate-600">Draft prepared: {lastUpdated}</p>
+    <div class="prose-legal mt-8 text-slate-800">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

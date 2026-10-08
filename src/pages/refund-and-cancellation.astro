@@ -1,0 +1,30 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { COMPANY, CONTACT_LINKS } from '../config/site';
+---
+
+<LegalLayout
+  title="Refund & Cancellation"
+  description="Refund and cancellation terms for Nirvigna. The website does not take payments."
+  lastUpdated="8 October 2026"
+>
+  <h2>1. No payments on this website</h2>
+  <p>This website does not sell anything and does not accept payments. Using the contact form or booking a demo is free.</p>
+
+  <h2>2. Paid services</h2>
+  <p>
+    If you later engage {COMPANY.brand} for a paid service, the price, what is included, and the refund and cancellation terms will
+    be set out in writing before you pay. Those written terms will apply to that service.
+  </p>
+  <p><Placeholder text="[PLACEHOLDER: standard refund and cancellation terms for paid services]" /></p>
+
+  <h2>3. Fees paid to authorities and professionals</h2>
+  <p>
+    Government fees and fees charged by a qualified CA/CS for regulated filings are set by those authorities and professionals.
+    Whether they can be refunded depends on their own rules.
+  </p>
+
+  <h2>4. Contact</h2>
+  <p>Questions about payments or cancellations: <a href={CONTACT_LINKS.email}>{COMPANY.email}</a>, {COMPANY.phoneDisplay}.</p>
+</LegalLayout>

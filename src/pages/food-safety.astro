@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { PRODUCTS } from '../config/site';
+
+const name = PRODUCTS.foodSafety.name;
+---
+
+<BaseLayout
+  title={name}
+  description={`${name} is in development: a planned FSSAI food-safety app for restaurants, hotels and food units. Register your interest.`}
+>
+  <PageHero
+    status={PRODUCTS.foodSafety.status}
+    title={name}
+    lead="A food-safety app we are building for restaurants, hotels and food units, to help with day-to-day FSSAI food-safety practice. It is not available yet."
+  >
+    <div class="mt-8">
+      <a href="/contact/" class="btn-primary">Register interest</a>
+    </div>
+  </PageHero>
+
+  <Section title="What we plan to include" intro="These are the areas we are designing for. Details may change as we build and test with food businesses.">
+    <div class="grid gap-6 sm:grid-cols-2">
+      <Card title="Ingredient checks at procurement">Recording checks on ingredients and supplies as they arrive.</Card>
+      <Card title="Batch and expiry tracking">Keeping track of batches and expiry dates so older stock is used first and expired stock is not.</Card>
+      <Card title="Hygiene review">Routine hygiene checklists for kitchens and food-handling areas.</Card>
+      <Card title="Pre-audits">A self-check against food-safety requirements before an official inspection.</Card>
+    </div>
+  </Section>
+
+  <Section title="Who it is for" tone="muted">
+    <p class="max-w-3xl leading-relaxed text-slate-700">
+      Restaurants, hotels, cloud kitchens, caterers and food processing units. If you would like to try it when it is ready, or
+      tell us what would help your kitchen most, register your interest.
+    </p>
+    <p class="mt-4">
+      <a href="/industries/restaurants-and-food/" class="link">Compliance for restaurants & food businesses</a>
+    </p>
+  </Section>
+
+  <CtaBand title="Register interest" body="Tell us about your food business and we will let you know when there is something to try." label="Register interest" />
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+interface Props {
+  title?: string;
+  intro?: string;
+  tone?: 'white' | 'muted';
+  id?: string;
+}
+const { title, intro, tone = 'white', id } = Astro.props;
+---
+
+<section id={id} class:list={[tone === 'muted' ? 'bg-slate-50' : 'bg-white']}>
+  <div class="container-page py-12 sm:py-16">
+    {title && <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>}
+    {intro && <p class="mt-3 max-w-3xl text-lg leading-relaxed text-slate-700">{intro}</p>}
+    <div class:list={[title || intro ? 'mt-8' : '']}>
+      <slot />
+    </div>
+  </div>
+</section>
