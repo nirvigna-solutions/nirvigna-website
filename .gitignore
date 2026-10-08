@@ -1,0 +1,12 @@
+node_modules/
+build/
+build-test/
+build-noform/
+.astro/
+.env
+.env.*
+!.env.example
+test-results/
+playwright-report/
+.lighthouseci/
+lhci-reports/
