@@ -1,0 +1,85 @@
+---
+import Logo from './Logo.astro';
+import ContactBar from './ContactBar.astro';
+import { COMPANY, PRODUCTS } from '../config/site';
+import { t, type Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const ui = t(locale);
+const current = Astro.url.pathname;
+
+const items = [
+  { href: PRODUCTS.compliance.href, label: ui.nav.compliance },
+  { href: PRODUCTS.foodSafety.href, label: ui.nav.foodSafety },
+  { href: '/industries/', label: ui.nav.industries },
+  { href: '/how-it-works/', label: ui.nav.howItWorks },
+  { href: '/pricing/', label: ui.nav.pricing },
+  { href: '/about/', label: ui.nav.about },
+];
+const isCurrent = (href: string) => (current === href || current.startsWith(href) ? 'page' : undefined);
+---
+
+<header class="relative border-b border-slate-200 bg-white">
+  <ContactBar locale={locale} />
+  <div class="container-page flex items-center justify-between gap-4 py-3">
+    <a href="/" class="rounded-md" aria-label={`${COMPANY.brand} home`}>
+      <Logo />
+    </a>
+
+    <nav aria-label={ui.nav.label} class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href)}
+                class="rounded-md px-3 py-2 text-[0.95rem] font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-800 aria-[current=page]:text-brand-800 aria-[current=page]:underline aria-[current=page]:underline-offset-4"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li class="ml-2">
+          <a href="/contact/" class="btn-primary" aria-current={isCurrent('/contact/')}>{ui.nav.bookDemo}</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Works without JavaScript: a native disclosure widget. -->
+    <details class="group lg:hidden">
+      <summary
+        class="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg border border-slate-300 px-4 font-semibold text-slate-800 [&::-webkit-details-marker]:hidden"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+        {ui.nav.menu}
+      </summary>
+      <nav aria-label={ui.nav.label} class="absolute inset-x-0 z-20 mt-3 border-b border-slate-200 bg-white shadow-lg">
+        <ul class="container-page flex flex-col py-2">
+          {
+            items.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={isCurrent(item.href)}
+                  class="block rounded-md px-2 py-3 font-medium text-slate-800 hover:bg-brand-50 aria-[current=page]:text-brand-800"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+          <li class="py-3">
+            <a href="/contact/" class="btn-primary w-full">{ui.nav.bookDemo}</a>
+          </li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>

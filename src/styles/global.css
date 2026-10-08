@@ -1,0 +1,86 @@
+@import '@fontsource-variable/inter';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  /* Royal blue brand palette. 700+ passes WCAG AA on white for body text. */
+  --color-brand-50: #eef3ff;
+  --color-brand-100: #dce6ff;
+  --color-brand-200: #bfd0ff;
+  --color-brand-300: #93aefc;
+  --color-brand-400: #6183f6;
+  --color-brand-500: #3d5ff0;
+  --color-brand-600: #2a45dc;
+  --color-brand-700: #2236b8;
+  --color-brand-800: #212f93;
+  --color-brand-900: #1f2c74;
+  --color-brand-950: #151b45;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 1rem;
+  }
+  body {
+    @apply bg-white font-sans text-slate-800 antialiased;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-brand-600);
+    outline-offset: 2px;
+  }
+  h1, h2, h3 {
+    @apply text-slate-900;
+    text-wrap: balance;
+  }
+  a {
+    overflow-wrap: anywhere;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .link {
+    @apply font-medium text-brand-700 underline decoration-brand-300 underline-offset-2 hover:decoration-brand-700;
+  }
+  .btn-primary {
+    @apply inline-flex min-h-11 items-center justify-center rounded-lg bg-brand-700 px-5 py-2.5 text-base font-semibold text-white no-underline hover:bg-brand-800;
+  }
+  .btn-secondary {
+    @apply inline-flex min-h-11 items-center justify-center rounded-lg border border-brand-700 bg-white px-5 py-2.5 text-base font-semibold text-brand-800 no-underline hover:bg-brand-50;
+  }
+  .prose-legal h2 {
+    @apply mt-10 mb-3 text-xl font-semibold;
+  }
+  .prose-legal h3 {
+    @apply mt-6 mb-2 text-lg font-semibold;
+  }
+  .prose-legal p,
+  .prose-legal ul,
+  .prose-legal ol {
+    @apply mb-4 leading-relaxed;
+  }
+  .prose-legal ul {
+    @apply list-disc pl-6;
+  }
+  .prose-legal ol {
+    @apply list-decimal pl-6;
+  }
+  .prose-legal li {
+    @apply mb-1;
+  }
+  .prose-legal a {
+    @apply font-medium text-brand-700 underline underline-offset-2;
+  }
+  /* Spam honeypot: off-screen, not display:none, so simple bots still fill it in. */
+  .hp-field {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+}

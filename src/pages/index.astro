@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { PRODUCTS } from '../config/site';
+---
+
+<BaseLayout
+  fullTitle
+  title="Nirvigna — know which licences apply to your business, and why"
+  description={`${PRODUCTS.compliance.name} turns your business profile into a clear list of the licences that apply, why they apply, and under which Act and section. Early access, Telangana first.`}
+>
+  <section class="border-b border-brand-100 bg-gradient-to-b from-brand-50 to-white">
+    <div class="container-page py-14 sm:py-20">
+      <StatusBadge status="earlyAccess" />
+      <h1 class="mt-5 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+        Know which licences apply to your business — and why.
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-slate-700">
+        {PRODUCTS.compliance.name} starts from a profile of your business and shows which licences and registrations apply,
+        the reason for each, and the Act and section behind it. Where we do not have enough facts, it says
+        {' '}<strong>“we can’t tell yet”</strong> instead of guessing.
+      </p>
+      <p class="mt-3 max-w-2xl text-slate-700">Starting with businesses in Telangana.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/contact/" class="btn-primary">Book a demo</a>
+        <a href="/how-it-works/" class="btn-secondary">See how it works</a>
+      </div>
+    </div>
+  </section>
+
+  <Section title="Two ways in" intro="Whether you are opening a new business or have been running one for years, the starting point is the same: an honest picture of what applies to you.">
+    <div class="grid gap-6 md:grid-cols-2">
+      <Card title="Starting a business" href="/starting-a-business/" linkLabel="Starting a business: how it works">
+        See which licences and registrations your plan needs before you open, in a sensible order, with the documents each one
+        asks for.
+      </Card>
+      <Card title="Already running" href="/already-running/" linkLabel="Already running: how it works">
+        Set a baseline, find the gaps, regularise what is missing and stay current with renewals.
+      </Card>
+    </div>
+  </Section>
+
+  <Section title="How it works" tone="muted">
+    <ol class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        [
+          ['Business profile', 'You describe your business: what you do, where, at what scale, and with how many people.'],
+          ['Applicable licences', 'Each licence is shown with why it applies and the Act and section behind it — or “we can’t tell yet”.'],
+          ['Compliance register', 'Everything that applies goes into one register you can keep up to date.'],
+          ['Documents and renewals', 'Document packs for each item, and reminders before renewals fall due.'],
+        ].map(([title, body], i) => (
+          <li class="rounded-xl border border-slate-200 bg-white p-6">
+            <p class="text-sm font-semibold text-brand-700">Step {i + 1}</p>
+            <h3 class="mt-1 text-lg font-semibold">{title}</h3>
+            <p class="mt-2 leading-relaxed text-slate-700">{body}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="mt-6"><a href="/how-it-works/" class="link">Read the full walkthrough</a></p>
+  </Section>
+
+  <Section title="Products">
+    <div class="grid gap-6 md:grid-cols-2">
+      <div class="rounded-xl border border-slate-200 p-6">
+        <StatusBadge status={PRODUCTS.compliance.status} />
+        <h3 class="mt-3 text-xl font-semibold">{PRODUCTS.compliance.name}</h3>
+        <p class="mt-2 leading-relaxed text-slate-700">
+          Licence applicability, a compliance register, document packs and renewals, for food businesses, manufacturers and
+          shops and establishments.
+        </p>
+        <p class="mt-4"><a href={PRODUCTS.compliance.href} class="link">About {PRODUCTS.compliance.name}</a></p>
+      </div>
+      <div class="rounded-xl border border-slate-200 p-6">
+        <StatusBadge status={PRODUCTS.foodSafety.status} />
+        <h3 class="mt-3 text-xl font-semibold">{PRODUCTS.foodSafety.name}</h3>
+        <p class="mt-2 leading-relaxed text-slate-700">
+          A planned FSSAI food-safety app for restaurants, hotels and food units: ingredient checks, batch and expiry tracking,
+          hygiene reviews and pre-audits.
+        </p>
+        <p class="mt-4"><a href={PRODUCTS.foodSafety.href} class="link">About {PRODUCTS.foodSafety.name}</a></p>
+      </div>
+    </div>
+  </Section>
+
+  <Section title="Built for three kinds of business" tone="muted">
+    <div class="grid gap-6 md:grid-cols-3">
+      <Card title="Restaurants & food" href="/industries/restaurants-and-food/" linkLabel="Restaurants & food">
+        Restaurants, cloud kitchens, caterers, bakeries and food units.
+      </Card>
+      <Card title="Manufacturing" href="/industries/manufacturing/" linkLabel="Manufacturing">
+        Small and medium manufacturing units and workshops.
+      </Card>
+      <Card title="Shops & establishments" href="/industries/shops-and-establishments/" linkLabel="Shops & establishments">
+        Retail shops, offices, clinics, salons and other commercial establishments.
+      </Card>
+    </div>
+  </Section>
+
+  <Section title="Honest about what we know">
+    <div class="grid gap-6 md:grid-cols-3">
+      <Card title="Reasons, not just lists">Every item says why it applies to you and where the requirement comes from.</Card>
+      <Card title="“We can’t tell yet”">If a fact is missing, we say so and ask for it, rather than marking a licence as not applicable.</Card>
+      <Card title="Qualified people for filings">
+        Nirvigna organises the work. Regulated filings are done by a qualified CA/CS.
+      </Card>
+    </div>
+  </Section>
+
+  <CtaBand />
+</BaseLayout>

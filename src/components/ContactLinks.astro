@@ -1,0 +1,25 @@
+---
+import { COMPANY, CONTACT_LINKS } from '../config/site';
+
+interface Props {
+  /** Single column, for narrow sidebars. */
+  stacked?: boolean;
+}
+const { stacked = false } = Astro.props;
+---
+
+<ul class:list={['grid gap-4', !stacked && 'sm:grid-cols-3']} data-testid="contact-links">
+  <li class="rounded-xl border border-slate-200 bg-white p-5">
+    <p class="text-sm font-semibold text-slate-600 uppercase">Email</p>
+    <a href={CONTACT_LINKS.email} class="link mt-1 inline-block text-lg">{COMPANY.email}</a>
+  </li>
+  <li class="rounded-xl border border-slate-200 bg-white p-5">
+    <p class="text-sm font-semibold text-slate-600 uppercase">Call</p>
+    <a href={CONTACT_LINKS.call} class="link mt-1 inline-block text-lg">{COMPANY.phoneDisplay}</a>
+  </li>
+  <li class="rounded-xl border border-slate-200 bg-white p-5">
+    <p class="text-sm font-semibold text-slate-600 uppercase">WhatsApp</p>
+    <a href={CONTACT_LINKS.whatsapp} rel="noopener" class="link mt-1 inline-block text-lg">Message {COMPANY.phoneDisplay}</a>
+    <p class="mt-2 text-sm text-slate-600">Opens WhatsApp, a service run by Meta. See our <a href="/privacy/" class="link">privacy notice</a>.</p>
+  </li>
+</ul>

@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { PRODUCTS } from '../config/site';
+---
+
+<BaseLayout
+  title="Starting a business"
+  description={`Opening a new business? ${PRODUCTS.compliance.name} (early access) helps you see which licences and registrations your plan needs, why, and in what order.`}
+>
+  <PageHero
+    status="earlyAccess"
+    eyebrow={PRODUCTS.compliance.name}
+    title="Starting a business"
+    lead="Before you sign a lease or open your doors, find out which licences and registrations your plan needs, why they apply, and what each one asks for."
+  />
+
+  <Section title="How this track works">
+    <ol class="max-w-3xl list-decimal space-y-4 pl-6 leading-relaxed text-slate-700">
+      <li><strong class="text-slate-900">Describe your plan.</strong> What you will do, where, the kind of premises, and how many people you expect to employ.</li>
+      <li>
+        <strong class="text-slate-900">See what applies.</strong> Each licence or registration comes with the reason it applies and the Act and
+        section behind it. Where your plan is not settled yet, you will see “we can’t tell yet” and what we need to know.
+      </li>
+      <li><strong class="text-slate-900">Get the order right.</strong> Some registrations depend on others. The list is arranged so you can work through it in sequence.</li>
+      <li><strong class="text-slate-900">Gather documents.</strong> A document pack for each item lists what to collect.</li>
+      <li><strong class="text-slate-900">File through a qualified professional.</strong> Regulated filings are done by a qualified CA/CS.</li>
+      <li><strong class="text-slate-900">Carry on in the register.</strong> Once you are open, everything moves into your compliance register, with renewals tracked.</li>
+    </ol>
+  </Section>
+
+  <Section title="Good to know" tone="muted">
+    <ul class="max-w-3xl list-disc space-y-2 pl-6 leading-relaxed text-slate-700">
+      <li>This track is in early access and starts with Telangana.</li>
+      <li>It is meant to help you prepare and ask the right questions. It is not legal advice.</li>
+      <li>Already trading? The <a href="/already-running/" class="link">already running</a> track is the better fit.</li>
+    </ul>
+  </Section>
+
+  <CtaBand />
+</BaseLayout>

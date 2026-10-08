@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # One job, no deploy: build, check, scan, test, Lighthouse.
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Type check
+        run: npm run check
+
+      - name: Product names come from one config value
+        run: npm run check:names
+
+      - name: Scanner unit tests
+        run: npm run test:unit
+
+      - name: Build (stubbed endpoint, and endpoint unset)
+        run: npm run build:variants
+
+      - name: Forbidden-words scan of the built site
+        run: npm run scan
+
+      - name: Playwright (360, 768, 1024, 1440)
+        run: npm run test:e2e
+
+      - name: Lighthouse CI
+        run: npm run lhci
+
+      - name: Upload Lighthouse reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: lhci-reports/
+          if-no-files-found: warn
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          if-no-files-found: ignore
+
+      - name: Upload generated security headers policy
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloudfront-response-headers-policy
+          path: |
+            build-test/cloudfront-response-headers-policy.json
+            build-noform/cloudfront-response-headers-policy.json

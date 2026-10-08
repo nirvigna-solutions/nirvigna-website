@@ -1,0 +1,92 @@
+---
+import Logo from './Logo.astro';
+import { ADDRESS_ONE_LINE, COMPANY, CONTACT_LINKS, DISCLAIMER_SHORT, PRODUCTS } from '../config/site';
+import { t, type Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+const ui = t(Astro.props.locale);
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    heading: ui.footer.products,
+    links: [
+      { href: PRODUCTS.compliance.href, label: PRODUCTS.compliance.name },
+      { href: PRODUCTS.foodSafety.href, label: PRODUCTS.foodSafety.name },
+      { href: '/how-it-works/', label: ui.nav.howItWorks },
+      { href: '/pricing/', label: ui.nav.pricing },
+    ],
+  },
+  {
+    heading: ui.footer.tracks,
+    links: [
+      { href: '/starting-a-business/', label: ui.pages.startingBusiness },
+      { href: '/already-running/', label: ui.pages.alreadyRunning },
+      { href: '/audit-readiness/', label: ui.pages.auditReadiness },
+      { href: '/industries/', label: ui.nav.industries },
+    ],
+  },
+  {
+    heading: ui.footer.company,
+    links: [
+      { href: '/about/', label: ui.nav.about },
+      { href: '/contact/', label: ui.pages.contact },
+    ],
+  },
+  {
+    heading: ui.footer.legal,
+    links: [
+      { href: '/privacy/', label: ui.legalLinks.privacy },
+      { href: '/terms/', label: ui.legalLinks.terms },
+      { href: '/refund-and-cancellation/', label: ui.legalLinks.refund },
+      { href: '/disclaimer/', label: ui.legalLinks.disclaimer },
+      { href: '/grievance/', label: ui.legalLinks.grievance },
+    ],
+  },
+];
+---
+
+<footer class="mt-auto border-t border-slate-200 bg-slate-50 text-slate-700" data-testid="site-footer">
+  <div class="container-page py-10">
+    <p class="mb-8 rounded-lg border border-slate-200 bg-white p-4 text-sm leading-relaxed" data-testid="disclaimer">
+      <strong class="text-slate-900">{ui.legalLinks.disclaimer}:</strong>{' '}
+      {DISCLAIMER_SHORT} <a href="/disclaimer/" class="link">{ui.legalLinks.disclaimer}</a>
+    </p>
+
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+      <div>
+        <Logo />
+      </div>
+      {
+        columns.map((col) => (
+          <nav aria-label={col.heading}>
+            <h2 class="mb-3 text-sm font-semibold tracking-wide text-slate-900 uppercase">{col.heading}</h2>
+            <ul class="space-y-1">
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href} class="inline-block py-1 text-slate-700 hover:text-brand-800 hover:underline">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 border-t border-slate-200 pt-6 text-sm leading-relaxed" data-testid="legal-footer">
+      <p class="font-semibold text-slate-900" data-testid="footer-legal-name">{COMPANY.legalName}</p>
+      <p data-testid="footer-cin">{ui.footer.cin}: {COMPANY.cin}</p>
+      <p data-testid="footer-address">{ui.footer.registeredOffice}: {ADDRESS_ONE_LINE}</p>
+      <p>
+        <a href={CONTACT_LINKS.email} class="link" data-testid="footer-email">{COMPANY.email}</a>
+        <span aria-hidden="true"> · </span>
+        <a href={CONTACT_LINKS.call} class="link" data-testid="footer-phone">{COMPANY.phoneDisplay}</a>
+      </p>
+      <p class="mt-2" data-testid="footer-copyright">© {year} {COMPANY.legalName}. {ui.footer.rights}</p>
+    </div>
+  </div>
+</footer>

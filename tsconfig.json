@@ -1,0 +1,5 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["build", "build-test", "build-noform", "node_modules", "lhci-reports", "test-results"]
+}

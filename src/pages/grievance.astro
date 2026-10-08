@@ -1,0 +1,46 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { ADDRESS_ONE_LINE, COMPANY, CONTACT_LINKS, GRIEVANCE_OFFICER_NAME } from '../config/site';
+---
+
+<LegalLayout
+  title="Grievance contact"
+  description="How to raise a grievance with Nirvigna about personal data or this website, under the Digital Personal Data Protection Act, 2023."
+  lastUpdated="8 October 2026"
+>
+  <p>
+    If you have a concern about how we handle your personal data, or about this website, please contact our Grievance Officer.
+  </p>
+
+  <h2>Grievance Officer</h2>
+  <dl class="grid gap-x-6 gap-y-2 sm:grid-cols-[auto_1fr]">
+    <dt class="font-semibold">Name</dt>
+    <dd><Placeholder text={GRIEVANCE_OFFICER_NAME} /></dd>
+    <dt class="font-semibold">Company</dt>
+    <dd>{COMPANY.legalName}</dd>
+    <dt class="font-semibold">Email</dt>
+    <dd><a href={CONTACT_LINKS.email}>{COMPANY.email}</a></dd>
+    <dt class="font-semibold">Phone</dt>
+    <dd><a href={CONTACT_LINKS.call}>{COMPANY.phoneDisplay}</a></dd>
+    <dt class="font-semibold">Address</dt>
+    <dd>{ADDRESS_ONE_LINE}</dd>
+  </dl>
+
+  <h2>What to include</h2>
+  <ul>
+    <li>Your name and how to reach you.</li>
+    <li>What your concern is about, with dates if you have them.</li>
+    <li>What you would like us to do.</li>
+  </ul>
+
+  <h2>What happens next</h2>
+  <p>
+    We will acknowledge your grievance and respond within the time the law requires:
+    <Placeholder text="[PLACEHOLDER: response timeline to be confirmed in legal review]" />.
+  </p>
+  <p>
+    If you are not satisfied with our response, you may complain to the Data Protection Board of India. See our
+    <a href="/privacy/">Privacy Policy</a> for your rights.
+  </p>
+</LegalLayout>

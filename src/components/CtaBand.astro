@@ -1,0 +1,22 @@
+---
+interface Props {
+  title?: string;
+  body?: string;
+  label?: string;
+}
+const {
+  title = 'Talk to us about early access',
+  body = 'Tell us about your business and we will walk you through what Nirvigna can do for it today, and what is still being built.',
+  label = 'Book a demo',
+} = Astro.props;
+---
+
+<section class="bg-brand-800 text-white">
+  <div class="container-page flex flex-col items-start gap-6 py-12 md:flex-row md:items-center md:justify-between">
+    <div class="max-w-2xl">
+      <h2 class="text-2xl font-bold text-white">{title}</h2>
+      <p class="mt-2 text-brand-50">{body}</p>
+    </div>
+    <a href="/contact/" class="inline-flex min-h-11 shrink-0 items-center rounded-lg bg-white px-5 py-2.5 font-semibold text-brand-900 hover:bg-brand-50">{label}</a>
+  </div>
+</section>

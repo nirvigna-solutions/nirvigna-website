@@ -1,0 +1,45 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { COMPANY, CONTACT_LINKS, DISCLAIMER_SHORT, PRODUCTS } from '../config/site';
+---
+
+<LegalLayout
+  title="Disclaimer"
+  description="Information on the Nirvigna website is general information only and is not legal advice. Regulated filings are done by a qualified CA/CS."
+  lastUpdated="8 October 2026"
+>
+  <p><strong>{DISCLAIMER_SHORT}</strong></p>
+
+  <h2>1. Information only</h2>
+  <p>
+    Everything on this website, including descriptions of licences, Acts, sections and industries, is general information. It is
+    not legal, tax or professional advice and should not be relied on as a substitute for advice on your own situation.
+  </p>
+
+  <h2>2. Regulated filings</h2>
+  <p>
+    {COMPANY.brand} helps organise compliance work. Regulated filings, and any work that the law reserves for a professional, are
+    done by a qualified CA/CS.
+  </p>
+
+  <h2>3. Product status</h2>
+  <p>
+    {PRODUCTS.compliance.name} is in early access and {PRODUCTS.foodSafety.name} is in development. Features described on this
+    website may change, and coverage starts with Telangana.
+  </p>
+
+  <h2>4. Not a government body</h2>
+  <p>
+    {COMPANY.brand} is a private company. It is not part of, affiliated with or endorsed by any government department, regulator
+    or licensing authority.
+  </p>
+
+  <h2>5. No promise of outcomes</h2>
+  <p>
+    Using {COMPANY.brand} does not mean an application will be granted, an inspection will go a certain way, or a penalty will be
+    avoided. Those decisions rest with the relevant authorities.
+  </p>
+
+  <h2>6. Contact</h2>
+  <p>Questions about this disclaimer: <a href={CONTACT_LINKS.email}>{COMPANY.email}</a>.</p>
+</LegalLayout>

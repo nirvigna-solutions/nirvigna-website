@@ -1,0 +1,29 @@
+---
+import { COMPANY, CONTACT_LINKS } from '../config/site';
+import { t, type Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+const ui = t(Astro.props.locale);
+---
+
+<div class="bg-brand-950 text-sm text-white">
+  <ul aria-label={ui.contactBar.label} class="container-page flex flex-wrap items-center justify-end gap-x-5 gap-y-1 py-1.5">
+    <li>
+      <a href={CONTACT_LINKS.email} class="inline-flex min-h-8 items-center underline-offset-2 hover:underline">
+        {ui.contactBar.email}<span class="hidden sm:inline">&nbsp;{COMPANY.email}</span>
+      </a>
+    </li>
+    <li>
+      <a href={CONTACT_LINKS.call} class="inline-flex min-h-8 items-center underline-offset-2 hover:underline">
+        {ui.contactBar.call}<span class="hidden sm:inline">&nbsp;{COMPANY.phoneDisplay}</span>
+      </a>
+    </li>
+    <li>
+      <a href={CONTACT_LINKS.whatsapp} rel="noopener" class="inline-flex min-h-8 items-center underline-offset-2 hover:underline">
+        {ui.contactBar.whatsapp}
+      </a>
+    </li>
+  </ul>
+</div>

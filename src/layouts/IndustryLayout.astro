@@ -1,0 +1,48 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { INDUSTRIES, type IndustrySlug } from '../config/industries';
+import { PRODUCTS } from '../config/site';
+
+interface Props {
+  slug: IndustrySlug;
+}
+const industry = INDUSTRIES.find((i) => i.slug === Astro.props.slug)!;
+---
+
+<BaseLayout title={`${industry.title} — industries`} description={industry.description}>
+  <PageHero status="earlyAccess" eyebrow="Industries" title={industry.title} lead={industry.summary} />
+
+  <Section
+    title="Areas we look at"
+    intro={`These are the kinds of requirement a business like yours often has to consider. ${PRODUCTS.compliance.name} works out which of them apply to you from your business profile, with the reason and the Act and section for each — or tells you “we can’t tell yet”.`}
+  >
+    <ul class="max-w-3xl list-disc space-y-2 pl-6 leading-relaxed text-slate-700">
+      {industry.areas.map((a) => <li>{a}</li>)}
+    </ul>
+    <p class="mt-6 max-w-3xl text-sm leading-relaxed text-slate-600">
+      This list is general information, not a checklist for your business and not legal advice.
+    </p>
+  </Section>
+
+  <Section title="Where to start" tone="muted">
+    <ul class="max-w-3xl list-disc space-y-2 pl-6 leading-relaxed text-slate-700">
+      <li>Opening soon? See <a href="/starting-a-business/" class="link">starting a business</a>.</li>
+      <li>Already trading? See <a href="/already-running/" class="link">already running</a>.</li>
+      <li>Expecting an inspection? See <a href="/audit-readiness/" class="link">audit readiness</a>.</li>
+      {
+        industry.showFoodSafety && (
+          <li>
+            Interested in day-to-day food safety? See <a href={PRODUCTS.foodSafety.href} class="link">{PRODUCTS.foodSafety.name}</a> (in
+            development).
+          </li>
+        )
+      }
+    </ul>
+    <p class="mt-6"><a href="/industries/" class="link">All industries</a></p>
+  </Section>
+
+  <CtaBand />
+</BaseLayout>

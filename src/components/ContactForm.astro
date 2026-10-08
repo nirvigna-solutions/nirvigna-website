@@ -1,0 +1,109 @@
+---
+/**
+ * Contact form. Rendered only when PUBLIC_CONTACT_ENDPOINT is set at build time.
+ * Backend contract: docs/WEBSITE_PLAN.md ("Contact form backend contract").
+ * Works without JavaScript; src/scripts/contact-form.ts adds inline confirmation.
+ * Visitor-facing text for the script lives in data-* attributes so the forbidden-words scan covers it.
+ */
+import { t, DEFAULT_LOCALE } from '../i18n/config';
+
+const ui = t(DEFAULT_LOCALE);
+const endpoint = __CONTACT_ENDPOINT__;
+const input =
+  'mt-1 block w-full rounded-lg border border-slate-400 bg-white px-3 py-2.5 text-base text-slate-900 focus:border-brand-700';
+const label = 'block font-medium text-slate-900';
+const req = `<span class="text-red-800" aria-hidden="true">*</span>`;
+---
+
+{
+  endpoint && (
+    <form
+      method="post"
+      action={endpoint}
+      enctype="application/x-www-form-urlencoded"
+      class="relative rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
+      aria-labelledby="contact-form-heading"
+      data-contact-form
+      data-msg-sending={ui.form.sending}
+      data-msg-success-title={ui.form.successTitle}
+      data-msg-success-body={ui.form.successBody}
+    >
+      <h2 id="contact-form-heading" class="text-xl font-semibold">
+        {ui.form.heading}
+      </h2>
+      <p class="mt-1 text-sm text-slate-600">
+        Fields marked <span aria-hidden="true">*</span> are {ui.form.required}.
+      </p>
+
+      <div class="mt-6 grid gap-5 sm:grid-cols-2" data-form-fields>
+        <div>
+          <label for="cf-name" class={label}>
+            {ui.form.name} <Fragment set:html={req} />
+          </label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="120" class={input} />
+        </div>
+        <div>
+          <label for="cf-business" class={label}>
+            {ui.form.businessName}
+          </label>
+          <input id="cf-business" name="business_name" type="text" autocomplete="organization" maxlength="160" class={input} />
+        </div>
+        <div>
+          <label for="cf-phone" class={label}>
+            {ui.form.phone} <Fragment set:html={req} />
+          </label>
+          <input id="cf-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" class={input} />
+        </div>
+        <div>
+          <label for="cf-email" class={label}>
+            {ui.form.email}
+          </label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" maxlength="160" class={input} />
+        </div>
+        <div class="sm:col-span-2">
+          <label for="cf-segment" class={label}>
+            {ui.form.segment} <Fragment set:html={req} />
+          </label>
+          <select id="cf-segment" name="segment" required class={input}>
+            <option value="">{ui.form.segmentChoose}</option>
+            <option value="food">{ui.form.segments.food}</option>
+            <option value="manufacturing">{ui.form.segments.manufacturing}</option>
+            <option value="shops">{ui.form.segments.shops}</option>
+            <option value="other">{ui.form.segments.other}</option>
+          </select>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="cf-message" class={label}>
+            {ui.form.message} <Fragment set:html={req} />
+          </label>
+          <textarea id="cf-message" name="message" rows="5" required maxlength="2000" class={input} />
+        </div>
+
+        <div class="hp-field" aria-hidden="true">
+          <label for="cf-company-website">{ui.form.honeypot}</label>
+          <input id="cf-company-website" name="company_website" type="text" tabindex="-1" autocomplete="off" value="" />
+        </div>
+
+        <div class="flex items-start gap-3 sm:col-span-2">
+          <input id="cf-consent" name="consent" type="checkbox" value="yes" required class="mt-1 size-5 shrink-0 accent-brand-700" />
+          <label for="cf-consent" class="text-slate-800">
+            {ui.form.consentBefore} <a href="/privacy/" class="link">{ui.form.consentLink}</a>.{' '}
+            <Fragment set:html={req} />
+          </label>
+        </div>
+
+        <div class="sm:col-span-2">
+          <button type="submit" class="btn-primary w-full sm:w-auto">
+            {ui.form.submit}
+          </button>
+        </div>
+      </div>
+
+      <div data-form-status role="status" aria-live="polite" tabindex="-1" class="mt-4 empty:hidden" />
+    </form>
+  )
+}
+
+<script>
+  import '../scripts/contact-form';
+</script>

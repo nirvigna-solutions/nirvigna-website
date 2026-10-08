@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { PRODUCTS } from '../config/site';
+---
+
+<BaseLayout
+  title="Already running a business"
+  description={`For businesses already trading: ${PRODUCTS.compliance.name} (early access) helps you set a baseline, find gaps, regularise and stay current with renewals.`}
+>
+  <PageHero
+    status="earlyAccess"
+    eyebrow={PRODUCTS.compliance.name}
+    title="Already running a business"
+    lead="Most businesses that have been trading for a while hold some licences, have let others lapse, and are unsure about the rest. This track is built to sort that out, step by step."
+  />
+
+  <Section title="Four steps">
+    <div class="grid gap-6 sm:grid-cols-2">
+      <Card title="1. Baseline">
+        Record what you already hold — licence numbers, validity dates and documents — against your business profile.
+      </Card>
+      <Card title="2. Find gaps">
+        Compare what you hold with what applies. Each gap shows why the item applies and the Act and section behind it, or “we
+        can’t tell yet” where facts are missing.
+      </Card>
+      <Card title="3. Regularise">
+        Work through the gaps with document packs. Regulated filings are done by a qualified CA/CS.
+      </Card>
+      <Card title="4. Stay current">
+        Keep the register up to date and hear about renewals before they fall due.
+      </Card>
+    </div>
+  </Section>
+
+  <Section title="Facing an inspection?" tone="muted">
+    <p class="max-w-3xl leading-relaxed text-slate-700">
+      If you are preparing for an inspection, our <a href="/audit-readiness/" class="link">audit readiness</a> service is built on the same
+      register. It is also in early access, starting with Telangana.
+    </p>
+  </Section>
+
+  <CtaBand />
+</BaseLayout>
