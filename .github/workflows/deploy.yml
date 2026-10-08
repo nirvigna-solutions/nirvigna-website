@@ -1,0 +1,52 @@
+name: Deploy to GitHub Pages
+
+# Interim hosting until the AWS S3 + CloudFront move (docs/WEBSITE_PLAN.md).
+# Build only: the CI workflow is the gate. Requires Pages source = "GitHub Actions" and the
+# custom domain nirvigna.co set in the repository's Pages settings.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - uses: actions/configure-pages@v5
+
+      # Unset repository variable = no contact form; the CSP meta tag follows the same value.
+      - name: Build
+        run: npm run build
+        env:
+          PUBLIC_CONTACT_ENDPOINT: ${{ vars.PUBLIC_CONTACT_ENDPOINT }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

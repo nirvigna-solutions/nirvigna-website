@@ -6,7 +6,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { resolveContactEndpoint } from './src/config/contact-endpoint.mjs';
-import { buildCloudFrontPolicy } from './src/config/security-headers.mjs';
+import { buildCloudFrontPolicy, buildMetaCsp } from './src/config/security-headers.mjs';
 
 // process.env wins over .env files, so CI and the build-variant script can override it.
 const env = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), 'PUBLIC_');
@@ -42,7 +42,10 @@ export default defineConfig({
   integrations: [securityHeaders()],
   vite: {
     plugins: [tailwindcss()],
-    define: { __CONTACT_ENDPOINT__: JSON.stringify(contactEndpoint) },
+    define: {
+      __CONTACT_ENDPOINT__: JSON.stringify(contactEndpoint),
+      __CSP_META__: JSON.stringify(buildMetaCsp(contactEndpoint)),
+    },
     // Never inline scripts or assets: the CSP allows only 'self' files.
     build: { assetsInlineLimit: 0 },
   },

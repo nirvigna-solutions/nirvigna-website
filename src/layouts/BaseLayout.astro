@@ -24,6 +24,8 @@ const pageTitle = fullTitle ? title : `${title} | ${COMPANY.brand}`;
 <html lang={LOCALE_META[locale].htmlLang}>
   <head>
     <meta charset="utf-8" />
+    <!-- GitHub Pages cannot send headers; this must stay before any stylesheet or script. -->
+    <meta http-equiv="Content-Security-Policy" content={__CSP_META__} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#2236b8" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

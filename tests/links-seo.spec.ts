@@ -107,3 +107,30 @@ test('security headers are served, and pages contain no inline executable script
     expect(inline, path).toEqual({ scripts: 0, styleTags: 0, styleAttrs: 0 });
   }
 });
+
+test('every page carries the CSP meta tag (header policy minus frame-ancestors) before any stylesheet or script', async ({ page, request }) => {
+  const headerCsp = (await request.get('/')).headers()['content-security-policy'];
+  const expected = headerCsp
+    .split('; ')
+    .filter((d) => !d.startsWith('frame-ancestors'))
+    .join('; ');
+  for (const path of PAGES) {
+    await page.goto(path);
+    const meta = page.locator('head meta[http-equiv="Content-Security-Policy"]');
+    await expect(meta, path).toHaveCount(1);
+    await expect(meta, path).toHaveAttribute('content', expected);
+    const firstResourceIndex = await page.evaluate(() => {
+      const head = [...document.head.children];
+      const meta = head.findIndex((el) => el.getAttribute('http-equiv') === 'Content-Security-Policy');
+      const firstResource = head.findIndex((el) => el.matches('link[rel="stylesheet"], script[src], link[rel="preload"]'));
+      return { meta, firstResource };
+    });
+    expect(firstResourceIndex.meta, path).toBeLessThan(firstResourceIndex.firstResource);
+  }
+});
+
+test('the build publishes CNAME for the custom domain', async ({ request }) => {
+  const res = await request.get('/CNAME');
+  expect(res.status()).toBe(200);
+  expect((await res.text()).trim()).toBe('nirvigna.co');
+});

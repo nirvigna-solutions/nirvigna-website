@@ -1,10 +1,13 @@
-// Builds the CloudFront response headers policy. The CSP is derived from the contact
-// endpoint so the form is never silently blocked by form-action or connect-src.
+// Builds the CSP and the CloudFront response headers policy. The CSP is derived from the
+// contact endpoint so the form is never silently blocked by form-action or connect-src.
+
+/** Directives a <meta http-equiv> CSP cannot carry (browsers ignore them there and log an error). */
+const HEADER_ONLY_DIRECTIVES = ['frame-ancestors'];
 
 /** @param {string | null} endpoint */
-export function buildCsp(endpoint) {
+function cspDirectives(endpoint) {
   const origin = endpoint ? new URL(endpoint).origin : null;
-  const directives = [
+  return [
     ['default-src', "'none'"],
     ['script-src', "'self'"],
     ['style-src', "'self'"],
@@ -17,7 +20,21 @@ export function buildCsp(endpoint) {
     ['object-src', "'none'"],
     ['frame-ancestors', "'none'"],
   ];
-  return directives.map(([k, v]) => `${k} ${v}`).join('; ');
+}
+
+const serialise = (directives) => directives.map(([k, v]) => `${k} ${v}`).join('; ');
+
+/** CSP for the Content-Security-Policy response header. @param {string | null} endpoint */
+export function buildCsp(endpoint) {
+  return serialise(cspDirectives(endpoint));
+}
+
+/**
+ * CSP for <meta http-equiv="Content-Security-Policy">, used while hosting cannot send headers
+ * (GitHub Pages). Same policy minus header-only directives. @param {string | null} endpoint
+ */
+export function buildMetaCsp(endpoint) {
+  return serialise(cspDirectives(endpoint).filter(([k]) => !HEADER_ONLY_DIRECTIVES.includes(k)));
 }
 
 /**

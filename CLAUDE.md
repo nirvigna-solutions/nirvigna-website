@@ -39,8 +39,10 @@ anywhere else under `src/`. `npm run check:names` enforces this. The same applie
 ## Privacy and security
 
 - No cookies, trackers, analytics or third-party scripts. Fonts are self-hosted. Nothing is stored in the browser.
-- No inline scripts or styles: the CSP allows `'self'` only. The CSP is generated at build time from `PUBLIC_CONTACT_ENDPOINT`;
-  changing the endpoint requires a rebuild.
+- No inline scripts or styles: the CSP allows `'self'` only. The CSP is generated at build time from `PUBLIC_CONTACT_ENDPOINT`
+  (as a `<meta>` tag for GitHub Pages and as the CloudFront headers policy); changing the endpoint requires a rebuild.
+- Every push to `main` deploys to GitHub Pages (`.github/workflows/deploy.yml`). Merge only with green CI and Vamsi's approval.
+- This repository is public: never commit secrets, personal contact details or internal notes.
 - The contact form posts directly to the backend; its contract is in `docs/WEBSITE_PLAN.md`. Changing the fields means changing
   that contract and the Playwright test that checks it.
 

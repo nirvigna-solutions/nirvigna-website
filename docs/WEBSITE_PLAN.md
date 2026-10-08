@@ -1,7 +1,36 @@
 # Nirvigna website plan
 
-Static Astro site for https://nirvigna.co. Nothing in this repository deploys anything. Approval: Vamsi, until the company
-names a website owner.
+Static Astro site for https://nirvigna.co. Approval: Vamsi, until the company names a website owner.
+
+## Hosting
+
+**Interim hosting: GitHub Pages; target: AWS S3 + CloudFront once the Nirvigna AWS account is active.**
+
+`.github/workflows/deploy.yml` builds and deploys to GitHub Pages on every push to `main` (and on manual dispatch). It runs
+no tests; the CI workflow is the gate, so only merge PRs whose CI is green. There is no github.io interim version: the site is
+built for `https://nirvigna.co` only, and the deploy waits until the custom domain is in place.
+
+Setup, done once by a repository admin before the first merge to `main`:
+
+1. Make the repository public (Pages on the free plan needs a public repository).
+2. Pages source = GitHub Actions, custom domain = `nirvigna.co`, for example
+   `gh api -X POST repos/nirvigna-solutions/nirvigna-website/pages -f build_type=workflow` then
+   `gh api -X PUT repos/nirvigna-solutions/nirvigna-website/pages -f cname=nirvigna.co`.
+   With an Actions deploy, GitHub takes the domain from these settings and ignores the file; `public/CNAME` is kept as the
+   record of the intended domain.
+3. At GoDaddy: the four apex `A` records for GitHub Pages (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
+   `185.199.111.153`), `www` `CNAME` to `nirvigna-solutions.github.io`, and the GitHub domain-verification `TXT` record
+   (verify the domain for the organisation to prevent takeover). **Titan's MX, SPF and DKIM records stay exactly as they
+   are**; check mail in both directions afterwards.
+4. Once GitHub has issued the certificate, turn on "Enforce HTTPS".
+5. Contact form: leave the repository variable `PUBLIC_CONTACT_ENDPOINT` unset until the backend exists (no form is rendered).
+   Setting it and re-running the deploy adds the form, and the CSP meta tag follows automatically.
+
+Rollback: unpublish the site (Settings → Pages, or `gh api -X DELETE repos/nirvigna-solutions/nirvigna-website/pages`) and, if
+needed, remove the Pages `A`/`CNAME` records at GoDaddy. Never touch the Titan records.
+
+GitHub Pages serves `/path/` as `/path/index.html` and answers unknown paths with `404.html` and status 404, so it needs none of
+the CloudFront workarounds in the launch checklist.
 
 ## Sitemap and content intent
 
@@ -80,6 +109,13 @@ Each build writes `<out>/../cloudfront-response-headers-policy.json`, the input 
 includeSubDomains, no preload), `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`,
 `X-Frame-Options: DENY`. CI keeps it as an artifact. Tests serve the site with exactly these headers.
 
+**On GitHub Pages (interim)** no custom response headers can be sent. Every page therefore carries
+`<meta http-equiv="Content-Security-Policy">`, built by the same function from the same endpoint value
+(`buildMetaCsp` in `src/config/security-headers.mjs`), placed before any stylesheet or script. It omits `frame-ancestors`,
+which browsers ignore in a meta tag. **HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options` and
+`frame-ancestors` wait for the AWS/CloudFront move**, where the generated headers policy applies them all. Until then the site
+can be framed by other sites, and HSTS is not sent (GitHub Pages does redirect HTTP to HTTPS once "Enforce HTTPS" is on).
+
 ## Adding Telugu
 
 Interface strings are in `src/i18n/en.ts`, typed through `src/i18n/config.ts`. To add Telugu: add `te` to `LOCALES` and to
@@ -92,9 +128,9 @@ Interface strings are in `src/i18n/en.ts`, typed through `src/i18n/config.ts`. T
 One workflow (`.github/workflows/ci.yml`), one job: type check, product-name check, scanner unit tests, both builds,
 forbidden-words scan, Playwright at 360/768/1024/1440, Lighthouse CI (Performance, Accessibility, Best Practices, SEO each
 ≥ 0.95, median of three runs, `upload.target: filesystem`). Lighthouse reports, the Playwright report and the headers policy
-are kept as Actions artifacts. No deploy step.
+are kept as Actions artifacts. CI never deploys; deployment is the separate one-job workflow described under Hosting.
 
-## Launch checklist (in order)
+## Launch checklist for the AWS move (in order)
 
 1. **AWS account and IAM** — dedicated account (or OU), MFA on root, least-privilege deploy role.
 2. **Private S3 bucket with Origin Access Control, and CloudFront** using the generated response headers policy.
